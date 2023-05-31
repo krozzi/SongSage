@@ -135,12 +135,15 @@ export default function Dashboard() {
                 <Song
                   title={track.name}
                   artists={track.artists}
+                  image={track.album.images[0].url}
                 />
               </li>
             ))}
           </ul>
         )}
       </div>
+
+
     </div>
   );
 }
