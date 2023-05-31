@@ -16,6 +16,7 @@ interface Song {
   name: string;
   id: string;
   artists: any[];
+  link: string;
 }
 
 const CLIENT_ID = "75f36cadd43b47a4bc810fd77f5cc67d";
@@ -94,6 +95,7 @@ export default function Dashboard() {
 
           const userTopTracks = await topTracks.json();
           const parsedThings = JSON.parse(JSON.stringify(userTopTracks));
+          console.log(parsedThings.items);
 
           var arr: any[] = [];
           for (const obj of parsedThings.items) {
@@ -106,10 +108,11 @@ export default function Dashboard() {
               name: obj.name,
               id: obj.id,
               artists: art,
+              link: obj.album.images[2].url,
             };
             arr.push(songName);
           }
-
+          console.log(arr);
           setTracks(arr);
         } catch (error) {
           console.error(error);
@@ -135,7 +138,10 @@ export default function Dashboard() {
       <h1>your name is: {profileData.display_name}</h1>
       <ul>
         {tracks?.map((name, artist) => (
-          <li key={name.name}>{name.name + name.id + name.artists}</li>
+          <>
+            <li key={name.name}>{name.name + name.id + name.artists}</li>
+            <img key={name.id} src={name.link} />
+          </>
         ))}
       </ul>
     </div>
