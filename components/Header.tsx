@@ -14,7 +14,7 @@ export default function Header() {
         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           
           <li><Link href="/search">Search</Link></li>
-          <li><Link href="/discover">Discover</Link></li>
+          <li><Link href="/dashboard">Dashboard</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </div>
@@ -25,7 +25,7 @@ export default function Header() {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li><Link href="/search">Search</Link></li>
-            <li><Link href="/discover">Discover</Link></li>
+            <li><Link href="/dashboard">Dashboard</Link></li>
             <li><Link href="/about">About</Link></li>
           </ul>
         </div>

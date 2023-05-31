@@ -1,25 +1,9 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
-import {
-  JSXElementConstructor,
-  PromiseLikeOfReactNode,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import querystring from "querystring";
-
-interface Song {
-  name: string;
-  id: string;
-  artists: any[];
-  link: string;
-  track_link: string;
-}
+import Song from "../../components/Song";
 
 const CLIENT_ID = "75f36cadd43b47a4bc810fd77f5cc67d";
 const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIPAL_CLIENT_SECRET;
@@ -31,7 +15,10 @@ export default function Dashboard() {
   const code = searchParams.get("code");
   const [accessToken, setAccessToken] = useState("");
   const [profileData, setProfileData] = useState("");
-  const [tracks, setTracks] = useState<any[]>([]);
+  const [topTracks, setTopTracks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+
 
   function authorizeSpotify() {
     const scopes = ["user-read-private", "user-read-email", "user-top-read"];
@@ -54,6 +41,7 @@ export default function Dashboard() {
     async function getAccessToken() {
       if (CLIENT_SECRET) {
         try {
+
           const response = await fetch(
             "https://accounts.spotify.com/api/token",
             {
@@ -85,43 +73,39 @@ export default function Dashboard() {
           const profileData = await profileResponse.json();
           setProfileData(profileData);
 
-          const topTracks = await fetch(
-            "https://api.spotify.com/v1/me/top/tracks?limit=5",
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${access_token}`,
-              },
+
+          try {
+            const topTracks = await fetch(
+              "https://api.spotify.com/v1/me/top/tracks?limit=5",
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${access_token}`,
+                },
+              }
+            );
+            const userTopTracks = await topTracks.json();
+            
+            if (userTopTracks.items === undefined || userTopTracks.items.length === 0) {
+              console.log("User top tracks are undefined or empty. Redirecting back to authorization screen.");
+              authorizeSpotify();
             }
-          );
+            setTopTracks(userTopTracks.items);
+            console.log(userTopTracks.items);
+            setLoading(false);
 
-          const userTopTracks = await topTracks.json();
-          const parsedThings = JSON.parse(JSON.stringify(userTopTracks));
-          console.log(parsedThings.items);
+          } catch(e) {
+            console.error(e);
+          } 
 
-          var arr: any[] = [];
-          for (const obj of parsedThings.items) {
-            var art: any[] = [];
-            for (const artist of obj.artists) {
-              art.push(artist.name);
-            }
 
-            const songName: Song = {
-              name: obj.name,
-              id: obj.id,
-              artists: art,
-              link: obj.album.images[2].url,
-              track_link: obj.external_urls.spotify,
-            };
-            arr.push(songName);
-          }
-          console.log(arr);
-          setTracks(arr);
         } catch (error) {
           console.error(error);
+          setLoading(false);
         }
       }
     }
+
 
     if (!code) {
       authorizeSpotify();
@@ -129,6 +113,7 @@ export default function Dashboard() {
       getAccessToken();
     }
   }, [code]);
+
 
   return (
     <div>
@@ -139,15 +124,23 @@ export default function Dashboard() {
         {accessToken}
       </h1>
       <h1>your name is: {profileData.display_name}</h1>
-      <ul>
-        {tracks?.map((name, artist) => (
-          <>
-            <li key={name.name}>{name.name + name.id + name.artists}</li>
-            <img key={name.id} src={name.link} />
-            <Link href={name.track_link}>{name.name}</Link>
-          </>
-        ))}
-      </ul>
+        <div>
+        {/* ... */}
+        {loading ? (
+          <p>Loading top tracks...</p>
+        ) : (
+          <ul>
+            {topTracks.map((track) => (
+              <li key={track.id}>
+                <Song
+                  title={track.name}
+                  artists={track.artists}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
