@@ -1,12 +1,21 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import {
+  JSXElementConstructor,
+  PromiseLikeOfReactNode,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 import querystring from "querystring";
 
 interface Song {
   name: string;
   id: string;
+  artists: any[];
 }
 
 const CLIENT_ID = "75f36cadd43b47a4bc810fd77f5cc67d";
@@ -19,7 +28,6 @@ export default function Dashboard() {
   const code = searchParams.get("code");
   const [accessToken, setAccessToken] = useState("");
   const [profileData, setProfileData] = useState("");
-  const [profileDataTwo, setProfileDataTwo] = useState("");
   const [tracks, setTracks] = useState<any[]>([]);
 
   function authorizeSpotify() {
@@ -86,13 +94,18 @@ export default function Dashboard() {
 
           const userTopTracks = await topTracks.json();
           const parsedThings = JSON.parse(JSON.stringify(userTopTracks));
-          console.log(parsedThings.items);
 
-          var arr: Song[] = [];
+          var arr: any[] = [];
           for (const obj of parsedThings.items) {
+            var art: any[] = [];
+            for (const artist of obj.artists) {
+              art.push(artist.name);
+            }
+
             const songName: Song = {
               name: obj.name,
               id: obj.id,
+              artists: art,
             };
             arr.push(songName);
           }
@@ -122,7 +135,7 @@ export default function Dashboard() {
       <h1>your name is: {profileData.display_name}</h1>
       <ul>
         {tracks?.map((name, artist) => (
-          <li key={name.name}>{name.name + name.id}</li>
+          <li key={name.name}>{name.name + name.id + name.artists}</li>
         ))}
       </ul>
     </div>
