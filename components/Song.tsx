@@ -9,12 +9,18 @@ interface SongProps {
 
 function Song({ title, artists, image }: SongProps) {
   return (
-    <div className="my-4 py-4">
-      <div className="font-semibold text-xl font-poppins">{title}</div>
-      <div className="font-regular text-lg italic pb-3 font-poppins">
+
+    <div className="card w-96 bg-base-100 shadow-xl font-poppins">
+    <figure><img src={image} alt={title} /></figure>
+    <div className="card-body">
+        <h2 className="card-title">{title}</h2>
+        <p className="font-regular text-lg italic pb-3 font-poppins">
         {artists.map((artist) => artist.name).join(", ")}
-      </div>
-        <Image src={image} width={400} height={400} alt="help"/>
+       </p>
+        <div className="card-actions justify-end">
+        <button className="btn btn-primary">View Song</button>
+        </div>
+    </div>
     </div>
   );
 }

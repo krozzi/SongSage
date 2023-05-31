@@ -125,7 +125,7 @@ export default function Dashboard() {
       </h1>
       <h1>your name is: {profileData.display_name}</h1>
         <div>
-        {/* ... */}
+
         {loading ? (
           <p>Loading top tracks...</p>
         ) : (
