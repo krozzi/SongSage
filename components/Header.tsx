@@ -4,7 +4,7 @@ export default function Header() {
     return (
 
 
-      <div className="navbar fixed bg-black font-poppins text-accent text-3xl z-50">
+      <div className="navbar fixed bg-black font-poppins text-accent text-2xl z-50">
 
 
       <div className="dropdown">
