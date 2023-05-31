@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from "next/link"
-import Image from 'next/image';
 
 export default function Home() {
 
@@ -11,18 +10,16 @@ export default function Home() {
       </Head>
 
       <main>
+        
       <section className="hero h-screen bg-black">
-      
             <div className="hero-content text-center">
                   <div className="max-w-xl">
-
                     <h1 className="drop-shadow-[0_4px_145px_rgba(29,185,84,255)] overflow-hidden text-7xl lg:text-9xl font-extrabold font-poppins text-accent">
                         SpotiPal
                     </h1>
-                    <p className="py-8 font-poppins text-4xl">
+                    <p className="py-8 font-poppins text-4xl lg:pb-10">
                         <span className="text-white font-semibold ">Your</span>
                         <span className="text-accent font-semibold text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400"> melodic mate</span>
-                        <span></span>
                     </p>
                     <Link href="/dashboard">
                         <button className="drop-shadow-[0_4px_145px_rgba(29,185,84,255)] btn btn-lg btn-accent font-poppins text-white normal-case text-xl ">
@@ -32,14 +29,9 @@ export default function Home() {
                     </Link>
                   </div>
               </div>
-
-            
       </section>
 
       </main>
-
-      
-      
     </div>
   );
 }
