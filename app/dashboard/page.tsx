@@ -124,10 +124,12 @@ export default function Dashboard() {
         {accessToken}
       </h1> */}
 
-      <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">{profileData.display_name}'s Dashboard</h1>
+      <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400 drop-shadow-[0_4px_145px_rgba(29,185,84,255)]">{profileData.display_name}</span>'s Dashboard
+      </h1>
     
       <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-        Your<span className="text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400"> Top Ten</span> songs</h1>
+        Your<span className="text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400 font-bold drop-shadow-[0_4px_145px_rgba(29,185,84,255)]"> Top Ten</span> songs</h1>
 
 
 
