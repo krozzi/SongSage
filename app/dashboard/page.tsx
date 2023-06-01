@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import {
   JSXElementConstructor,
   PromiseLikeOfReactNode,
@@ -17,6 +18,7 @@ interface Song {
   id: string;
   artists: any[];
   link: string;
+  track_link: string;
 }
 
 const CLIENT_ID = "75f36cadd43b47a4bc810fd77f5cc67d";
@@ -109,6 +111,7 @@ export default function Dashboard() {
               id: obj.id,
               artists: art,
               link: obj.album.images[2].url,
+              track_link: obj.external_urls.spotify,
             };
             arr.push(songName);
           }
@@ -141,6 +144,7 @@ export default function Dashboard() {
           <>
             <li key={name.name}>{name.name + name.id + name.artists}</li>
             <img key={name.id} src={name.link} />
+            <Link href={name.track_link}>{name.name}</Link>
           </>
         ))}
       </ul>
