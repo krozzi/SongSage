@@ -20,7 +20,7 @@ function Song({ title, artists, image, link }: SongProps) {
        </p>
         <div className="card-actions justify-end">
 
-        <Link href={link}>
+        <Link target="_blank" href={link}>
             <button className="btn btn-accent">View Song</button>
         </Link>
         </div>
