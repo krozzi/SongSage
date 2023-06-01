@@ -95,19 +95,9 @@ export default function Dashboard() {
             setTopTracks(userTopTracks.items);
             console.log(userTopTracks.items);
 
-            var topIds: any[] = [];
-            for (const obj of userTopTracks.items) {
-              topIds.push(obj.id);
-            }
-
-            for (var i = 0; i < 5; i++) {
-              topIds.pop();
-            }
-
+            const topIds = userTopTracks.items.map((obj: { id: string }) => obj.id);
             const recommendedTracks = await fetch(
-              `https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=${topIds.join(
-                ","
-              )}`,
+              `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${topIds.slice(0, -5).join(",")}`,
               {
                 method: "GET",
                 headers: {
@@ -115,7 +105,6 @@ export default function Dashboard() {
                 },
               }
             );
-
             const userRecommendedTracks = await recommendedTracks.json();
 
             setRecommended(userRecommendedTracks.tracks);
@@ -148,16 +137,15 @@ export default function Dashboard() {
       </h1> */}
 
       <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">
-        {profileData.display_name}'s Dashboard
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">{profileData.display_name}'s</span> Dashboard
       </h1>
 
       <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-        Your
-        <span className="text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
-          {" "}
-          Top Ten
-        </span>{" "}
-        songs
+        Your {" "}
+        <span className=" font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+          Top Ten 
+        </span>
+        {" "} songs 
       </h1>
 
       <div>
@@ -173,9 +161,9 @@ export default function Dashboard() {
                 link={track.external_urls.spotify}
               />
             ))}
-            <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+            <h1 className="md:pt-0 lg:max-w-xl lg:pl-30 px-16 lg:pt-52 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
               Your
-              <span className="text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+              <span className="font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
                 {" "}
                 Recommended
               </span>{" "}
