@@ -17,8 +17,7 @@ export default function Dashboard() {
   const [profileData, setProfileData] = useState("");
   const [topTracks, setTopTracks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-
-
+  const [recommended, setRecommended] = useState<any[]>([]);
 
   function authorizeSpotify() {
     const scopes = ["user-read-private", "user-read-email", "user-top-read"];
@@ -41,7 +40,6 @@ export default function Dashboard() {
     async function getAccessToken() {
       if (CLIENT_SECRET) {
         try {
-
           const response = await fetch(
             "https://accounts.spotify.com/api/token",
             {
@@ -73,7 +71,6 @@ export default function Dashboard() {
           const profileData = await profileResponse.json();
           setProfileData(profileData);
 
-
           try {
             const topTracks = await fetch(
               "https://api.spotify.com/v1/me/top/tracks?limit=10",
@@ -85,20 +82,48 @@ export default function Dashboard() {
               }
             );
             const userTopTracks = await topTracks.json();
-            
-            if (userTopTracks.items === undefined || userTopTracks.items.length === 0) {
-              console.log("User top tracks are undefined or empty. Redirecting back to authorization screen.");
+
+            if (
+              userTopTracks.items === undefined ||
+              userTopTracks.items.length === 0
+            ) {
+              console.log(
+                "User top tracks are undefined or empty. Redirecting back to authorization screen."
+              );
               authorizeSpotify();
             }
             setTopTracks(userTopTracks.items);
             console.log(userTopTracks.items);
+
+            var topIds: any[] = [];
+            for (const obj of userTopTracks.items) {
+              topIds.push(obj.id);
+            }
+
+            for (var i = 0; i < 5; i++) {
+              topIds.pop();
+            }
+
+            const recommendedTracks = await fetch(
+              `https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=${topIds.join(
+                ","
+              )}`,
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${access_token}`,
+                },
+              }
+            );
+
+            const userRecommendedTracks = await recommendedTracks.json();
+
+            setRecommended(userRecommendedTracks.tracks);
+
             setLoading(false);
-
-          } catch(e) {
+          } catch (e) {
             console.error(e);
-          } 
-
-
+          }
         } catch (error) {
           console.error(error);
           setLoading(false);
@@ -106,14 +131,12 @@ export default function Dashboard() {
       }
     }
 
-
     if (!code) {
       authorizeSpotify();
     } else {
       getAccessToken();
     }
   }, [code]);
-
 
   return (
     <div className="no-scrollbar">
@@ -125,32 +148,50 @@ export default function Dashboard() {
       </h1> */}
 
       <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400 drop-shadow-[0_4px_145px_rgba(29,185,84,255)]">{profileData.display_name}</span>'s Dashboard
+        {profileData.display_name}'s Dashboard
       </h1>
-    
+
       <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-        Your<span className="text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400 font-bold drop-shadow-[0_4px_145px_rgba(29,185,84,255)]"> Top Ten</span> songs</h1>
-
-
+        Your
+        <span className="text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+          {" "}
+          Top Ten
+        </span>{" "}
+        songs
+      </h1>
 
       <div>
         {loading ? (
           <p>Loading top tracks...</p>
         ) : (
           <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
-              {topTracks.map((track) => (
-                <Song
-                  title={track.name}
-                  artists={track.artists}
-                  image={track.album.images[0].url}
-                  link={track.external_urls.spotify}
-                />
-              ))}
+            {topTracks.map((track) => (
+              <Song
+                title={track.name}
+                artists={track.artists}
+                image={track.album.images[0].url}
+                link={track.external_urls.spotify}
+              />
+            ))}
+            <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+              Your
+              <span className="text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+                {" "}
+                Recommended
+              </span>{" "}
+              songs
+            </h1>
+            {recommended.map((track) => (
+              <Song
+                title={track.name}
+                artists={track.artists}
+                image={track.album.images[0].url}
+                link={track.external_urls.spotify}
+              />
+            ))}
           </div>
         )}
       </div>
-
-
     </div>
   );
 }
