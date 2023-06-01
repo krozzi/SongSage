@@ -129,12 +129,6 @@ export default function Dashboard() {
 
   return (
     <div className="no-scrollbar">
-      {/* <h1>blud u have been successfully authorized </h1>
-      <h1>here is thou authorization code: {code}</h1>
-      <h1>
-        blud here is ur access token please work ive tried this liek 200 times{" "}
-        {accessToken}
-      </h1> */}
 
       <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">{profileData.display_name}'s</span> Dashboard
