@@ -76,7 +76,7 @@ export default function Dashboard() {
 
           try {
             const topTracks = await fetch(
-              "https://api.spotify.com/v1/me/top/tracks?limit=5",
+              "https://api.spotify.com/v1/me/top/tracks?limit=10",
               {
                 method: "GET",
                 headers: {
@@ -116,30 +116,35 @@ export default function Dashboard() {
 
 
   return (
-    <div>
-      <h1>blud u have been successfully authorized </h1>
+    <div className="no-scrollbar">
+      {/* <h1>blud u have been successfully authorized </h1>
       <h1>here is thou authorization code: {code}</h1>
       <h1>
         blud here is ur access token please work ive tried this liek 200 times{" "}
         {accessToken}
-      </h1>
-      <h1>your name is: {profileData.display_name}</h1>
-        <div>
+      </h1> */}
 
+      <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">{profileData.display_name}'s Dashboard</h1>
+    
+      <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+        Your<span className="text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400"> Top Ten</span> songs</h1>
+
+
+
+      <div>
         {loading ? (
           <p>Loading top tracks...</p>
         ) : (
-          <ul>
-            {topTracks.map((track) => (
-              <li key={track.id}>
+          <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
+              {topTracks.map((track) => (
                 <Song
                   title={track.name}
                   artists={track.artists}
                   image={track.album.images[0].url}
+                  link={track.external_urls.spotify}
                 />
-              </li>
-            ))}
-          </ul>
+              ))}
+          </div>
         )}
       </div>
 

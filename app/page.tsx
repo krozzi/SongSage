@@ -4,7 +4,7 @@ import Link from "next/link"
 export default function Home() {
 
   return (
-    <div>
+    <div className="no-scrollbar">
       <Head>
         <title>SpotiPal</title>
       </Head>
