@@ -14,9 +14,11 @@ const REDIRECT_URI = "http://localhost:3000/dashboard";
 export default function Search() {
       const [searchText, setSearchText] = useState("");
       const [searchResults, setSearchResults] = useState<string[]>([]);
-
+      const [access_token, setAccessToken] = useState("");
       const router = useRouter();
-      const accessToken = localStorage.getItem("accessToken");
+      
+      const searchParams = useSearchParams();
+      const code = searchParams.get("code");
 
       function authorizeSpotify(redirect:string) {
         const scopes = ["user-read-private", "user-read-email", "user-top-read"];
@@ -47,7 +49,7 @@ export default function Search() {
             `https://api.spotify.com/v1/search?q=${encodeURIComponent(searchText)}&type=track`,
             {
               headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${access_token}`,
                 "Content-Type": "application/json",
               },
             }
@@ -74,11 +76,53 @@ export default function Search() {
 
       useEffect(() => {
         
-        const isSignedIn = !!accessToken;
-        if (!isSignedIn) {
-          console.log("User not signed in, redirecting to authorization page...");
-          authorizeSpotify("http://localhost:3000/search");
+        async function getAccessToken() {
+          if (CLIENT_SECRET) {
+            try {
+              const response = await fetch(
+                "https://accounts.spotify.com/api/token",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                  },
+                  body: new URLSearchParams({
+                    grant_type: "authorization_code",
+                    code: code?.toString() ?? "",
+                    redirect_uri: "http://localhost:3000/search",
+                    client_id: CLIENT_ID,
+                    client_secret: CLIENT_SECRET,
+                  }).toString(),
+                }
+              );
+    
+              const data = await response.json();
+              const { access_token } = data;
+              setAccessToken(access_token);
+
+              localStorage.setItem("accessToken", access_token);
+              
+              return access_token;
+            } catch (error) {
+              console.error(error);
+            }
+          }
         }
+
+
+        if(code) {
+          getAccessToken();
+          
+        } else if (!localStorage.getItem("accessToken")){
+          console.log("reauthing...");
+          const accessToken = localStorage.getItem("accessToken");
+          const isSignedIn = !!accessToken;
+          if (!isSignedIn) {
+            console.log("User not signed in, redirecting to authorization page...");
+            authorizeSpotify("http://localhost:3000/search");
+          }
+        }
+          
       }, []);
 
       const handleSearch = () => {
