@@ -150,8 +150,8 @@ export default function Search() {
               <div className="input-group flex justify-center">
                   <input
                       type="text"
-                      placeholder="Type song name here"
-                      className="input join-item input-lg input-bordered lg:w-[50rem] md:w-[30rem]"
+                      placeholder="Find similar songs"
+                      className="input join-item input-lg input-bordered lg:w-[50rem] md:w-[30rem] font-poppins"
                       value={searchText}
                       onChange={handleChange}
                     />

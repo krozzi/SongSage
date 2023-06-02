@@ -18,7 +18,7 @@ function SongResult({ title, artists, image, id }: SongProps) {
         
             <div className="ml-4">
                 <h1 className="drop-shadow-[0_2px_40px_rgba(255,255,255,255)] mb-[2%] font-poppins text-2xl font-semibold text-white">{title}</h1>
-                <p className="text-white text-lg font-space font-semibold">{artists}</p>
+                <p className="text-white text-lg font-poppins font-regular">{artists}</p>
             </div>
         </div>
     </Link>
