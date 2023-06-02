@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import Song from "../../components/Song";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Song {
   name: string;
@@ -51,9 +51,12 @@ async function getRecs(query: string, token: string) {
 }
 
 export default async function SongPage() {
+  console.log("render");
   const searchParams = useSearchParams();
+  const router = useRouter();
   const id = searchParams.get("song_id");
   const token = localStorage.getItem("accessToken");
+
   console.log(id);
   console.log(token);
 
