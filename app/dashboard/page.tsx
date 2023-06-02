@@ -10,6 +10,7 @@ const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIPAL_CLIENT_SECRET;
 const REDIRECT_URI = "http://localhost:3000/dashboard";
 
 export default function Dashboard() {
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
@@ -19,13 +20,13 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [recommended, setRecommended] = useState<any[]>([]);
 
-  function authorizeSpotify() {
+  function authorizeSpotify(redirect:string) {
     const scopes = ["user-read-private", "user-read-email", "user-top-read"];
 
     const queryParams = {
       client_id: CLIENT_ID,
       response_type: "code",
-      redirect_uri: REDIRECT_URI,
+      redirect_uri: redirect,
       scope: scopes.join(" "),
     };
 
@@ -61,6 +62,8 @@ export default function Dashboard() {
           const { access_token, expires_in, refresh_token } = data;
 
           setAccessToken(access_token);
+          
+          localStorage.setItem("accessToken", access_token);
 
           const profileResponse = await fetch("https://api.spotify.com/v1/me", {
             headers: {
@@ -90,7 +93,7 @@ export default function Dashboard() {
               console.log(
                 "User top tracks are undefined or empty. Redirecting back to authorization screen."
               );
-              authorizeSpotify();
+              authorizeSpotify(REDIRECT_URI);
             }
             setTopTracks(userTopTracks.items);
             console.log(userTopTracks.items);
@@ -121,7 +124,7 @@ export default function Dashboard() {
     }
 
     if (!code) {
-      authorizeSpotify();
+      authorizeSpotify(REDIRECT_URI);
     } else {
       getAccessToken();
     }
