@@ -95,6 +95,11 @@ export default function Search() {
                   }).toString(),
                 }
               );
+
+              if(response.status !== 200) {
+                console.log("User token expired... reauthing...");
+                authorizeSpotify("http://localhost:3000/search");
+              }
     
               const data = await response.json();
               const { access_token } = data;
@@ -105,6 +110,8 @@ export default function Search() {
               return access_token;
             } catch (error) {
               console.error(error);
+              console.log("User token expired... reauthing...");
+              authorizeSpotify("http://localhost:3000/search");
             }
           }
         }
@@ -112,15 +119,9 @@ export default function Search() {
 
         if(code) {
           getAccessToken();
-          
         } else {
-          console.log("reauthing...");
-          // const accessToken = localStorage.getItem("accessToken");
-          // const isSignedIn = !!accessToken;
-          // if (!isSignedIn) {
-            console.log("User not signed in, redirecting to authorization page...");
-            authorizeSpotify("http://localhost:3000/search");
-          // }
+          console.log("User not signed in, redirecting to authorization page...");
+          authorizeSpotify("http://localhost:3000/search");
         }
           
       }, []);
