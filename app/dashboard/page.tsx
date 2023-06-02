@@ -100,7 +100,7 @@ export default function Dashboard() {
 
             const topIds = userTopTracks.items.map((obj: { id: string }) => obj.id);
             const recommendedTracks = await fetch(
-              `https://api.spotify.com/v1/recommendations?limit=15&seed_tracks=${topIds.slice(0, -5).join(",")}`,
+              `https://api.spotify.com/v1/recommendations?limit=50&seed_tracks=${topIds.slice(0, -5).join(",")}`,
               {
                 method: "GET",
                 headers: {
