@@ -21,7 +21,7 @@ export default function Search() {
       const code = searchParams.get("code");
 
       function authorizeSpotify(redirect:string) {
-        const scopes = ["user-read-private", "user-read-email", "user-top-read"];
+        const scopes = ["user-read-private", "user-read-email", "user-top-read", "playlist-read-private"];
     
         const queryParams = {
           client_id: CLIENT_ID,
@@ -113,14 +113,14 @@ export default function Search() {
         if(code) {
           getAccessToken();
           
-        } else if (!localStorage.getItem("accessToken")){
+        } else {
           console.log("reauthing...");
-          const accessToken = localStorage.getItem("accessToken");
-          const isSignedIn = !!accessToken;
-          if (!isSignedIn) {
+          // const accessToken = localStorage.getItem("accessToken");
+          // const isSignedIn = !!accessToken;
+          // if (!isSignedIn) {
             console.log("User not signed in, redirecting to authorization page...");
             authorizeSpotify("http://localhost:3000/search");
-          }
+          // }
         }
           
       }, []);
