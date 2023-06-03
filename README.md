@@ -1,4 +1,7 @@
 # SpotiPal
+
+A very bad spotify song recommender built by two highschool freshmen.
+
 Get personalized song recommendations in seconds. This project uses NextJS, TailwindCSS, DaisyUI, and the Spotify API.
 
 ![image](https://github.com/krozzi/SpotiPal/assets/107476445/1da8c59a-b4aa-4614-880a-79dfe8293e0c)
