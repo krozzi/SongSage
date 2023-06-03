@@ -18,8 +18,13 @@ export default function Home() {
                         SpotiPal
                     </h1>
                     <p className="py-8 font-poppins text-4xl lg:pb-10">
-                        <span className="text-white font-semibold ">Your</span>
-                        <span className="text-accent font-semibold text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400"> melodic mate</span>
+                        <span className="text-white font-semibold ">Get 
+                        <span className="text-accent font-semibold text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400"> personalized </span>
+                        song 
+                        <span className="text-accent font-semibold text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400"> recommendations </span> 
+                        
+                        in </span>
+                        <span className="text-accent font-semibold text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400"> seconds</span>
                     </p>
                     <Link href="/dashboard">
                         <button className="drop-shadow-[0_4px_145px_rgba(29,185,84,255)] btn btn-lg btn-accent font-poppins text-white normal-case text-xl ">

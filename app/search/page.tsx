@@ -131,6 +131,7 @@ export default function Search() {
 
   const handleSearch = () => {
     console.log(searchText);
+    console.log(performSearch(searchText));
   };
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
@@ -140,7 +141,9 @@ export default function Search() {
   return (
     <div className="hero h-screen no-scrollbar">
       <div className="mb-[60rem]">
-        <h1 className="pt-32 pb-16 text-center font-poppins text-5xl md:text-6xl lg:text-7xl font-bold">
+
+
+        <h1 className="pt-32 lg:pb-16 pb-8 text-center font-poppins px-4 lg:px-0 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
             Discover{" "}
           </span>
@@ -151,15 +154,15 @@ export default function Search() {
           <input
             type="text"
             placeholder="Find similar songs"
-            className="input join-item input-lg input-bordered lg:w-[50rem] md:w-[30rem] font-poppins"
+            className="input join-item input-lg input-bordered w-[15rem] xs:w-[10rem] sm:w-[30rem] lg:w-[50rem] md:w-[30rem] font-poppins"
             value={searchText}
             onChange={handleChange}
           />
           <button
             onClick={handleSearch}
-            className="drop-shadow-[0_4px_145px_rgba(29,185,84,255)] btn join-item btn-lg btn-accent font-poppins text-white normal-case text-xl"
+            className="drop-shadow-[0_4px_145px_rgba(29,185,84,255)] btn join-item xs:btn-square sm:btn-square btn-lg btn-accent font-poppins text-white normal-case text-xl"
           >
-            Search
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" viewBox="0 0 30 30" width="32px" height=""><path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"/></svg>
           </button>
         </div>
       </div>

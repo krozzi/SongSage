@@ -16,3 +16,12 @@
       }
     }
 }
+
+/* @media (max-width: 640px) {
+    .overflow-x-auto {
+      overflow-x: hidden;
+    }
+    .flex-nowrap {
+      flex-wrap: nowrap;
+    }
+} */

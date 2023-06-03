@@ -10,7 +10,7 @@ interface SongProps {
 
 function Song({ title, artists, image, link }: SongProps) {
   return (
-    <div className="card w-96 bg-stone-950 font-poppins">
+    <div className="drop-shadow-[0_0_10px_rgba(0,0,0,255)] flex-shrink-0 card w-96 bg-stone-950 font-poppins">
       <figure>
         <img src={image} alt={title} />
       </figure>
