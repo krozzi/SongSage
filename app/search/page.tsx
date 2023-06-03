@@ -49,6 +49,7 @@ export default function Search() {
   }
 
   const performSearch = async (searchText: string) => {
+    setSearchResults([]);
     try {
       const response = await fetch(
         `https://api.spotify.com/v1/search?q=${encodeURIComponent(
@@ -135,7 +136,7 @@ export default function Search() {
   };
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
-    console.log(performSearch(event.target.value));
+    // console.log(performSearch(event.target.value));
   };
 
   return (
