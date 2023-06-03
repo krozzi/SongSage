@@ -131,6 +131,7 @@ export default function Search() {
 
   const handleSearch = () => {
     console.log(searchText);
+    console.log(performSearch(searchText));
   };
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
