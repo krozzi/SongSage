@@ -50,4 +50,4 @@ This is the extent to which we can see user data:
 ![image](https://github.com/krozzi/SpotiPal/assets/107476445/e7a99e49-b5ee-4276-96be-e305cb4401d5)
 
 # License
-This project uses the GNU 3.0 License.
+This project uses the GNU General Public License v3.0 License.
