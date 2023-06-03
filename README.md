@@ -43,4 +43,11 @@ This is a project that (mostly) me and my friend have been working on for like a
 
 ![image](https://github.com/krozzi/SpotiPal/assets/107476445/7cfeb66a-acff-4b50-9891-1d40348800df)
 
+# Privacy
+Regarding connecting your Spotify account to this service, we can't see any of your personal information.
+This is the extent to which we can see user data:
 
+![image](https://github.com/krozzi/SpotiPal/assets/107476445/e7a99e49-b5ee-4276-96be-e305cb4401d5)
+
+# License
+This project uses the GNU 3.0 License.
