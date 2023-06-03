@@ -41,6 +41,10 @@ Search and find new songs within seconds with our simple UI
 
 ![image](https://github.com/krozzi/SpotiPal/assets/107476445/c1d03c47-ec99-4cd4-8c84-b142b141340d)
 
+# TODO
+- Taste profile thing, probably gonna look something like this
+![image](https://github.com/krozzi/SpotiPal/assets/107476445/85e08f3e-1dd5-4a6c-8ccb-cfd036c57638)
+
 # About
 This is a project that (mostly) me and my friend have been working on for like a week as of now (6/2/23)
 
