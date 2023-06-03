@@ -17,8 +17,8 @@ const space = Space_Grotesk({
 
 
 export const metadata = {
-  title: 'SpotiPal',
-  description: 'Spotify song recommendation engine',
+  title: 'SpotiPal | A quick and easy song recommender',
+  description: 'Find personalized songs recommendations for spotify, youtube, and apple music in seconds. Expand your musical taste with SpotiPal.',
 }
 
 export default function RootLayout({
