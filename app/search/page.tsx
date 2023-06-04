@@ -106,7 +106,9 @@ export default function Search() {
 
           if (response.status !== 200) {
             console.log("User token expired... reauthing... NOT STATUS 200");
-            authorizeSpotify(`${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`);
+            authorizeSpotify(
+              `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`
+            );
           }
 
           const data = await response.json();
@@ -119,7 +121,9 @@ export default function Search() {
         } catch (error) {
           console.error(error);
           console.log("User token expired... reauthing...");
-          authorizeSpotify(`${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`);
+          authorizeSpotify(
+            `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`
+          );
         }
       }
     }
