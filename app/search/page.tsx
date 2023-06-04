@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState, ChangeEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Dashboard from "../dashboard/page";
 import SongResult from "@/components/SongResult";
 import querystring from "querystring";
 
@@ -103,7 +102,7 @@ export default function Search() {
           );
 
           if (response.status !== 200) {
-            console.log("User token expired... reauthing...");
+            console.log("User token expired... reauthing... NOT STATUS 200");
             authorizeSpotify(
               `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`
             );

@@ -15,15 +15,21 @@ npm i
 ```
 in the desired directory. To install the necessary packages. You will need a Spotify developer app with the Redirect URIs listed below:
 ```
+some base url/dashboard
+some base url/search
+```
+an example would be something like this:
+```
 http://localhost:3000/dashboard
 http://localhost:3000/search
 ```
 An account can be created ![here](https://developer.spotify.com/) at the official Spotify developer page. 
 (Dashboard > Create App > Settings > Redirect URIs)
 
-You will need to create a local env file (`env.local`) with your client secret formatted like this 
+You will need to create a local env file (`env.local`) with your client secret and redirect URI base formatted like this 
 ```env
 NEXT_PUBLIC_SPOTIPAL_CLIENT_SECRET="your client secret here"
+NEXT_PUBLIC_SPOTIPAL_BASE_URL="base url without trailing forward slash"
 ```
 To run/test the program, simply run 
 ```
