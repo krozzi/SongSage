@@ -141,6 +141,7 @@ export default function SongPage() {
           <div className="lg:pl-10 flex flex-nowrap gap-10">
             {recommendeds.map((song, index) => (
               <Song
+                key={index}
                 title={song.name}
                 artists={song.artists}
                 image={song.image}

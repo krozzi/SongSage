@@ -186,7 +186,7 @@ export default function Search() {
 
       <div className="flex-grow max-h-[500px]">
         
-        <ul className="list-none p-0 m-0 pb-10">
+        <ul className="list-none p-0 m-0 pb-32">
           {searchResults &&
             searchResults.map((result, index) => (
               <li key={index} className="py-2">

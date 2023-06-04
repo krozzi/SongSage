@@ -160,6 +160,7 @@ export default function Dashboard() {
               <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
                 {topTracks.map((track) => (
                   <Song
+                    key={track.id}
                     title={track.name}
                     artists={track.artists}
                     image={track.album.images[0].url}
@@ -176,6 +177,7 @@ export default function Dashboard() {
                 </h1>
                 {recommended.map((track) => (
                   <Song
+                    key={track.id}
                     title={track.name}
                     artists={track.artists}
                     image={track.album.images[0].url}
@@ -189,52 +191,5 @@ export default function Dashboard() {
       )}
     </div>
 
-    // <div className="no-scrollbar">
-
-    //   <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">
-    //     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">{profileData.display_name}&apos;s</span> Dashboard
-    //   </h1>
-
-    //   <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-    //     Your {" "}
-    //     <span className=" font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
-    //       Top Ten 
-    //     </span>
-    //     {" "} songs 
-    //   </h1>
-
-    //   <div>
-    //     {loading ? (
-    //       <p>Loading top tracks...</p>
-    //     ) : (
-    //       <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
-    //         {topTracks.map((track) => (
-    //           <Song
-    //             title={track.name}
-    //             artists={track.artists}
-    //             image={track.album.images[0].url}
-    //             link={track.external_urls.spotify}
-    //           />
-    //         ))}
-    //         <h1 className="md:pt-0 lg:max-w-xl lg:pl-30 px-16 lg:pt-52 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-    //           Your
-    //           <span className="font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
-    //             {" "}
-    //             Recommended
-    //           </span>{" "}
-    //           songs
-    //         </h1>
-    //         {recommended.map((track) => (
-    //           <Song
-    //             title={track.name}
-    //             artists={track.artists}
-    //             image={track.album.images[0].url}
-    //             link={track.external_urls.spotify}
-    //           />
-    //         ))}
-    //       </div>
-    //     )}
-    //   </div>
-    // </div>
   );
 }
