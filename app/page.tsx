@@ -12,8 +12,8 @@ export default function Home() {
         <section className="hero h-screen bg-black">
           <div className="hero-content text-center">
             <div className="max-w-xl">
-              <h1 className="drop-shadow-[0_4px_145px_rgba(29,185,84,255)] overflow-hidden text-7xl lg:text-7xl font-extrabold font-poppins text-accent">
-                MelodyMate
+              <h1 className="drop-shadow-[0_4px_145px_rgba(29,185,84,255)] overflow-hidden text-7xl lg:text-8xl font-extrabold font-poppins text-accent pb-3">
+                SongSage
               </h1>
               <p className="py-8 font-poppins text-4xl lg:pb-10">
                 <span className="text-white font-semibold ">

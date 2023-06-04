@@ -38,7 +38,7 @@ export default function Header() {
 
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-4xl" href="/">
-          MelodyMate
+          SongSage
         </a>
       </div>
       <div className="navbar-center hidden lg:flex">
