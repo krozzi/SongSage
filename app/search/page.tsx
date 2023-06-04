@@ -9,7 +9,7 @@ import querystring from "querystring";
 
 const CLIENT_ID = "75f36cadd43b47a4bc810fd77f5cc67d";
 const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIPAL_CLIENT_SECRET;
-const REDIRECT_URI = "http://localhost:3000/dashboard";
+const REDIRECT_URI = `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/dashboard`;
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
@@ -95,7 +95,7 @@ export default function Search() {
               body: new URLSearchParams({
                 grant_type: "authorization_code",
                 code: code?.toString() ?? "",
-                redirect_uri: "http://localhost:3000/search",
+                redirect_uri: REDIRECT_URI,
                 client_id: CLIENT_ID,
                 client_secret: CLIENT_SECRET,
               }).toString(),
@@ -104,7 +104,7 @@ export default function Search() {
 
           if (response.status !== 200) {
             console.log("User token expired... reauthing...");
-            authorizeSpotify("http://localhost:3000/search");
+            authorizeSpotify(`${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`);
           }
 
           const data = await response.json();
@@ -117,7 +117,7 @@ export default function Search() {
         } catch (error) {
           console.error(error);
           console.log("User token expired... reauthing...");
-          authorizeSpotify("http://localhost:3000/search");
+          authorizeSpotify(`${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`);
         }
       }
     }
@@ -126,7 +126,7 @@ export default function Search() {
       getAccessToken();
     } else {
       console.log("User not signed in, redirecting to authorization page...");
-      authorizeSpotify("http://localhost:3000/search");
+      authorizeSpotify(`${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`);
     }
   }, []);
 

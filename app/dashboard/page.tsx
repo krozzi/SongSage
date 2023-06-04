@@ -7,7 +7,7 @@ import Song from "../../components/Song";
 
 const CLIENT_ID = "75f36cadd43b47a4bc810fd77f5cc67d";
 const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIPAL_CLIENT_SECRET;
-const REDIRECT_URI = "http://localhost:3000/dashboard";
+const REDIRECT_URI = `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/dashboard`;
 
 export default function Dashboard() {
 
@@ -51,7 +51,7 @@ export default function Dashboard() {
               body: new URLSearchParams({
                 grant_type: "authorization_code",
                 code: code?.toString() ?? "",
-                redirect_uri: "http://localhost:3000/dashboard",
+                redirect_uri: REDIRECT_URI,
                 client_id: CLIENT_ID,
                 client_secret: CLIENT_SECRET,
               }).toString(),
