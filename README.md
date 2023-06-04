@@ -1,4 +1,4 @@
-# SpotiPal
+# SongSage (previously SpotiPal)
 
 A very bad spotify song recommender built by two highschool freshmen.
 
