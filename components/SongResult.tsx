@@ -11,15 +11,15 @@ interface SongProps {
  
 function SongResult({ title, artists, image, id }: SongProps) {
   const [truncatedTitle, setTruncatedTitle] = useState(title);
-  const [truncatedArtists, setTruncatedArtists] = useState(artists);
+  const [truncatedArtists, setTruncatedArtists] = useState<string[]>(artists);
   const [cutoffLength, setCutoffLength] = useState(30);
   useEffect(() => {
     if (title.length > cutoffLength) {
       setTruncatedTitle(`${title.slice(0, cutoffLength)}...`);
     }
-    // console.log(artists);
+
     if (artists.length > cutoffLength) {
-      setTruncatedArtists(`${artists.slice(0, cutoffLength)}...`);
+      setTruncatedArtists(artists.slice(0, cutoffLength));
     }
 
   }, [title, artists, cutoffLength]);

@@ -5,6 +5,7 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SongResult from "@/components/SongResult";
 import querystring from "querystring";
+import Footer from "../../components/Footer";
 
 const CLIENT_ID = "75f36cadd43b47a4bc810fd77f5cc67d";
 const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIPAL_CLIENT_SECRET;
@@ -12,7 +13,7 @@ const REDIRECT_URI = `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`;
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState<string[]>([]);
+  const [searchResults, setSearchResults] = useState<TrackResult[] | null>(null);
   const [access_token, setAccessToken] = useState("");
   const router = useRouter();
 
@@ -45,6 +46,7 @@ export default function Search() {
     name: string;
     artists: string[];
     coverUrl: string;
+    id: string;
   }
 
   const performSearch = async (searchText: string) => {
@@ -67,12 +69,13 @@ export default function Search() {
       }
 
       const data = await response.json();
-      const searchResults = data.tracks.items.map((item: any) => ({
+      const searchResults: TrackResult[] = data.tracks.items.map((item: any) => ({
         id: item.id,
         name: item.name,
         artists: item.artists.map((artist: any) => artist.name).join(", "),
         coverUrl: item.album.images[0].url,
       }));
+
       setSearchResults(searchResults);
     } catch (error) {
       console.error("Error performing search:", error);
@@ -143,7 +146,7 @@ export default function Search() {
   };
 
   return (
-    <div className="hero h-screen no-scrollbar">
+    <div className="hero h-screen">
       <div className="mb-[60rem]">
         <h1 className="pt-32 lg:pb-16 pb-8 text-center font-poppins px-4 lg:px-0 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
@@ -177,20 +180,24 @@ export default function Search() {
         </div>
       </div>
 
-      <div style={{ maxHeight: "500px" }}>
-        <ul>
-          {searchResults.map((result, index) => (
-            <li key={index} className="py-2">
-              <SongResult
-                title={result.name}
-                artists={result.artists}
-                image={result.coverUrl}
-                id={result.id}
-              />
-            </li>
-          ))}
+      <div className="flex-grow max-h-[500px]">
+        
+        <ul className="list-none p-0 m-0 pb-10">
+          {searchResults &&
+            searchResults.map((result, index) => (
+              <li key={index} className="py-2">
+                <SongResult
+                  title={result.name}
+                  artists={result.artists}
+                  image={result.coverUrl}
+                  id={result.id}
+                />
+              </li>
+            ))}
         </ul>
+        
       </div>
+
     </div>
   );
 }

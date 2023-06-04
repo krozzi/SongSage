@@ -36,8 +36,8 @@ export default function RootLayout({
         <Header />
         
         {children}
-
-        <Footer/>
+        {/* the footer fucks up the search page for some reason */}
+        {/* <Footer/> */}
       </body>
 
     </html>

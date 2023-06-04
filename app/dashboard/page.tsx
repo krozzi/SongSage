@@ -15,10 +15,14 @@ export default function Dashboard() {
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
   const [accessToken, setAccessToken] = useState("");
-  const [profileData, setProfileData] = useState("");
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [topTracks, setTopTracks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [recommended, setRecommended] = useState<any[]>([]);
+
+  interface ProfileData {
+    display_name: string;
+  }
 
   function authorizeSpotify(redirect:string) {
     const scopes = ["user-read-private", "user-read-email", "user-top-read"];
@@ -71,9 +75,9 @@ export default function Dashboard() {
             },
           });
 
-          const profileData = await profileResponse.json();
+          const profileData = await profileResponse.json() as ProfileData;
           setProfileData(profileData);
-
+          
           try {
             const topTracks = await fetch(
               "https://api.spotify.com/v1/me/top/tracks?limit=10",
@@ -132,51 +136,105 @@ export default function Dashboard() {
 
   return (
     <div className="no-scrollbar">
+      {profileData && (
+        <>
+          <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+              {profileData.display_name}&apos;s
+            </span>{" "}
+            Dashboard
+          </h1>
 
-      <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">{profileData.display_name}'s</span> Dashboard
-      </h1>
+          <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+            Your{" "}
+            <span className=" font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+              Top Ten
+            </span>{" "}
+            songs
+          </h1>
 
-      <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-        Your {" "}
-        <span className=" font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
-          Top Ten 
-        </span>
-        {" "} songs 
-      </h1>
-
-      <div>
-        {loading ? (
-          <p>Loading top tracks...</p>
-        ) : (
-          <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
-            {topTracks.map((track) => (
-              <Song
-                title={track.name}
-                artists={track.artists}
-                image={track.album.images[0].url}
-                link={track.external_urls.spotify}
-              />
-            ))}
-            <h1 className="md:pt-0 lg:max-w-xl lg:pl-30 px-16 lg:pt-52 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-              Your
-              <span className="font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
-                {" "}
-                Recommended
-              </span>{" "}
-              songs
-            </h1>
-            {recommended.map((track) => (
-              <Song
-                title={track.name}
-                artists={track.artists}
-                image={track.album.images[0].url}
-                link={track.external_urls.spotify}
-              />
-            ))}
+          <div>
+            {loading ? (
+              <p>Loading top tracks...</p>
+            ) : (
+              <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
+                {topTracks.map((track) => (
+                  <Song
+                    title={track.name}
+                    artists={track.artists}
+                    image={track.album.images[0].url}
+                    link={track.external_urls.spotify}
+                  />
+                ))}
+                <h1 className="md:pt-0 lg:max-w-xl lg:pl-30 px-16 lg:pt-52 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+                  Your
+                  <span className="font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+                    {" "}
+                    Recommended
+                  </span>{" "}
+                  songs
+                </h1>
+                {recommended.map((track) => (
+                  <Song
+                    title={track.name}
+                    artists={track.artists}
+                    image={track.album.images[0].url}
+                    link={track.external_urls.spotify}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
+
+    // <div className="no-scrollbar">
+
+    //   <h1 className="pt-32 pb-16 text-center font-poppins text-6xl lg:text-7xl font-bold">
+    //     <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">{profileData.display_name}&apos;s</span> Dashboard
+    //   </h1>
+
+    //   <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+    //     Your {" "}
+    //     <span className=" font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+    //       Top Ten 
+    //     </span>
+    //     {" "} songs 
+    //   </h1>
+
+    //   <div>
+    //     {loading ? (
+    //       <p>Loading top tracks...</p>
+    //     ) : (
+    //       <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
+    //         {topTracks.map((track) => (
+    //           <Song
+    //             title={track.name}
+    //             artists={track.artists}
+    //             image={track.album.images[0].url}
+    //             link={track.external_urls.spotify}
+    //           />
+    //         ))}
+    //         <h1 className="md:pt-0 lg:max-w-xl lg:pl-30 px-16 lg:pt-52 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+    //           Your
+    //           <span className="font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+    //             {" "}
+    //             Recommended
+    //           </span>{" "}
+    //           songs
+    //         </h1>
+    //         {recommended.map((track) => (
+    //           <Song
+    //             title={track.name}
+    //             artists={track.artists}
+    //             image={track.album.images[0].url}
+    //             link={track.external_urls.spotify}
+    //           />
+    //         ))}
+    //       </div>
+    //     )}
+    //   </div>
+    // </div>
   );
 }
