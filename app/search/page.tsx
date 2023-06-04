@@ -25,7 +25,6 @@ export default function Search() {
       "user-read-private",
       "user-read-email",
       "user-top-read",
-      "playlist-read-private",
     ];
 
     const queryParams = {
