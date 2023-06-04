@@ -9,7 +9,7 @@ import querystring from "querystring";
 
 const CLIENT_ID = "75f36cadd43b47a4bc810fd77f5cc67d";
 const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIPAL_CLIENT_SECRET;
-const REDIRECT_URI = `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/dashboard`;
+const REDIRECT_URI = `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`;
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
@@ -104,7 +104,9 @@ export default function Search() {
 
           if (response.status !== 200) {
             console.log("User token expired... reauthing...");
-            authorizeSpotify(`${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`);
+            authorizeSpotify(
+              `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`
+            );
           }
 
           const data = await response.json();
@@ -117,7 +119,9 @@ export default function Search() {
         } catch (error) {
           console.error(error);
           console.log("User token expired... reauthing...");
-          authorizeSpotify(`${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`);
+          authorizeSpotify(
+            `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`
+          );
         }
       }
     }
