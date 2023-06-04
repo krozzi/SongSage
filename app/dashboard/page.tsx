@@ -25,7 +25,7 @@ export default function Dashboard() {
   }
 
   function authorizeSpotify(redirect:string) {
-    const scopes = ["user-read-private", "user-read-email", "user-top-read"];
+    const scopes = ["user-top-read"];
 
     const queryParams = {
       client_id: CLIENT_ID,

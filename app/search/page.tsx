@@ -22,9 +22,7 @@ export default function Search() {
 
   function authorizeSpotify(redirect: string) {
     const scopes = [
-      "user-read-private",
-      "user-read-email",
-      "user-top-read",
+      "user-top-read"
     ];
 
     const queryParams = {
