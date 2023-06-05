@@ -10,6 +10,7 @@ const CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIPAL_CLIENT_SECRET;
 const REDIRECT_URI = `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/dashboard`;
 
 export default function Dashboard() {
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
@@ -18,13 +19,12 @@ export default function Dashboard() {
   const [topTracks, setTopTracks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [recommended, setRecommended] = useState<any[]>([]);
-  const [noTracks, setNoTracks] = useState(false);
 
   interface ProfileData {
     display_name: string;
   }
 
-  function authorizeSpotify(redirect: string) {
+  function authorizeSpotify(redirect:string) {
     const scopes = ["user-read-private", "user-read-email", "user-top-read"];
 
     const queryParams = {
@@ -66,7 +66,7 @@ export default function Dashboard() {
           const { access_token, expires_in, refresh_token } = data;
 
           setAccessToken(access_token);
-
+          
           localStorage.setItem("accessToken", access_token);
 
           const profileResponse = await fetch("https://api.spotify.com/v1/me", {
@@ -75,9 +75,9 @@ export default function Dashboard() {
             },
           });
 
-          const profileData = (await profileResponse.json()) as ProfileData;
+          const profileData = await profileResponse.json() as ProfileData;
           setProfileData(profileData);
-
+          
           try {
             const topTracks = await fetch(
               "https://api.spotify.com/v1/me/top/tracks?limit=10",
@@ -94,19 +94,17 @@ export default function Dashboard() {
               userTopTracks.items === undefined ||
               userTopTracks.items.length === 0
             ) {
-              console.log("User top tracks are undefined or empty.");
-              setNoTracks(true);
+              console.log(
+                "User top tracks are undefined or empty. Redirecting back to authorization screen."
+              );
+              authorizeSpotify(REDIRECT_URI);
             }
             setTopTracks(userTopTracks.items);
             console.log(userTopTracks.items);
 
-            const topIds = userTopTracks.items.map(
-              (obj: { id: string }) => obj.id
-            );
+            const topIds = userTopTracks.items.map((obj: { id: string }) => obj.id);
             const recommendedTracks = await fetch(
-              `https://api.spotify.com/v1/recommendations?limit=50&seed_tracks=${topIds
-                .slice(0, -5)
-                .join(",")}`,
+              `https://api.spotify.com/v1/recommendations?limit=50&seed_tracks=${topIds.slice(0, -5).join(",")}`,
               {
                 method: "GET",
                 headers: {
@@ -147,48 +145,37 @@ export default function Dashboard() {
             Dashboard
           </h1>
 
-          {!noTracks && (
-            <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-              Your{" "}
-              <span className=" font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
-                Top Ten
-              </span>{" "}
-              songs
-            </h1>
-          )}
+          <h1 className="lg:pl-32 px-16 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+            Your{" "}
+            <span className=" font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+              Top Ten
+            </span>{" "}
+            songs
+          </h1>
 
           <div>
-            {noTracks && (
-              <h1 className="text-3xl lg:text-5xl font-extrabold font-poppins pb-3 text-center px-56">
-                No Favorites Yet!
-              </h1>
-            )}
             {loading ? (
               <p>Loading top tracks...</p>
             ) : (
               <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
-                {topTracks?.map((track) => (
+                {topTracks.map((track) => (
                   <Song
-                    key={track.id}
                     title={track.name}
                     artists={track.artists}
                     image={track.album.images[0].url}
                     link={track.external_urls.spotify}
                   />
                 ))}
-                {!noTracks && (
-                  <h1 className="md:pt-0 lg:max-w-xl lg:pl-30 px-16 lg:pt-52 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
-                    Your
-                    <span className="font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
-                      {" "}
-                      Recommended
-                    </span>{" "}
-                    songs
-                  </h1>
-                )}
-                {recommended?.map((track) => (
+                <h1 className="md:pt-0 lg:max-w-xl lg:pl-30 px-16 lg:pt-52 gap-x-20 pb-16 font-poppins text-5xl font-semibold lg:text-6xl text-center lg:text-left">
+                  Your
+                  <span className="font-bold text-accent text-transparent bg-clip-text bg-gradient-to-r from-accent to-cyan-400">
+                    {" "}
+                    Recommended
+                  </span>{" "}
+                  songs
+                </h1>
+                {recommended.map((track) => (
                   <Song
-                    key={track.id}
                     title={track.name}
                     artists={track.artists}
                     image={track.album.images[0].url}
