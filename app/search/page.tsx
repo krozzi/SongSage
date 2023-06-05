@@ -13,7 +13,9 @@ const REDIRECT_URI = `${process.env.NEXT_PUBLIC_SPOTIPAL_BASE_URL}/search`;
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState<TrackResult[] | null>(null);
+  const [searchResults, setSearchResults] = useState<TrackResult[] | null>(
+    null
+  );
   const [access_token, setAccessToken] = useState("");
   const router = useRouter();
 
@@ -21,12 +23,7 @@ export default function Search() {
   const code = searchParams.get("code");
 
   function authorizeSpotify(redirect: string) {
-    const scopes = [
-      "user-read-private",
-      "user-read-email",
-      "user-top-read",
-      "playlist-read-private",
-    ];
+    const scopes = ["user-top-read"];
 
     const queryParams = {
       client_id: CLIENT_ID,
@@ -69,12 +66,14 @@ export default function Search() {
       }
 
       const data = await response.json();
-      const searchResults: TrackResult[] = data.tracks.items.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        artists: item.artists.map((artist: any) => artist.name).join(", "),
-        coverUrl: item.album.images[0].url,
-      }));
+      const searchResults: TrackResult[] = data.tracks.items.map(
+        (item: any) => ({
+          id: item.id,
+          name: item.name,
+          artists: item.artists.map((artist: any) => artist.name).join(", "),
+          coverUrl: item.album.images[0].url,
+        })
+      );
 
       setSearchResults(searchResults);
     } catch (error) {
@@ -185,7 +184,6 @@ export default function Search() {
       </div>
 
       <div className="flex-grow max-h-[500px]">
-        
         <ul className="list-none p-0 m-0 pb-32">
           {searchResults &&
             searchResults.map((result, index) => (
@@ -199,9 +197,7 @@ export default function Search() {
               </li>
             ))}
         </ul>
-        
       </div>
-
     </div>
   );
 }
