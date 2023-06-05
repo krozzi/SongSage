@@ -25,7 +25,7 @@ export default function Dashboard() {
   }
 
   function authorizeSpotify(redirect:string) {
-    const scopes = ["user-read-private", "user-read-email", "user-top-read"];
+    const scopes = ["user-top-read"];
 
     const queryParams = {
       client_id: CLIENT_ID,
@@ -160,6 +160,7 @@ export default function Dashboard() {
               <div className="flex flex-wrap justify-evenly gap-x-20 gap-y-32 px-16">
                 {topTracks.map((track) => (
                   <Song
+                    key={track.id}
                     title={track.name}
                     artists={track.artists}
                     image={track.album.images[0].url}
@@ -176,6 +177,7 @@ export default function Dashboard() {
                 </h1>
                 {recommended.map((track) => (
                   <Song
+                    key={track.id}
                     title={track.name}
                     artists={track.artists}
                     image={track.album.images[0].url}
@@ -188,5 +190,6 @@ export default function Dashboard() {
         </>
       )}
     </div>
+
   );
 }
