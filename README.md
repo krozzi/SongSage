@@ -52,7 +52,7 @@ Search and find new songs within seconds with our simple UI
 ![image](https://github.com/krozzi/SpotiPal/assets/107476445/85e08f3e-1dd5-4a6c-8ccb-cfd036c57638)
 
 # About
-This is a project that (mostly) me and my friend have been working on for like a week as of now (6/2/23)
+This is a project that me and my friend have been working on for like a week as of now
 
 ![image](https://github.com/krozzi/SpotiPal/assets/107476445/7cfeb66a-acff-4b50-9891-1d40348800df)
 
