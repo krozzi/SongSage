@@ -1,6 +1,6 @@
 # SongSage (previously SpotiPal)
 
-A very bad spotify song recommender built by two highschool freshmen.
+A very bad spotify song recommender built by two idiot highschoolers
 
 Get personalized song recommendations in seconds. This project uses NextJS, TailwindCSS, DaisyUI, and the Spotify API.
 
